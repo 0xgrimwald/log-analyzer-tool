@@ -1,0 +1,7 @@
+192.168.1.100 - - [22/Mar/2025:10:15:23 +0000] "GET /index.html HTTP/1.1" 200 1234 "-" "Mozilla/5.0"
+192.168.1.101 - - [22/Mar/2025:10:15:24 +0000] "GET /api/users HTTP/1.1" 200 567 "-" "curl/7.68.0"
+10.0.0.50 - - [22/Mar/2025:10:15:25 +0000] "POST /api/login HTTP/1.1" 401 89 "-" "PostmanRuntime/7.28.4"
+192.168.1.100 - - [22/Mar/2025:10:16:01 +0000] "GET /assets/style.css HTTP/1.1" 200 2048 "http://example.com/" "Mozilla/5.0"
+10.0.0.50 - - [22/Mar/2025:10:16:03 +0000] "POST /api/login HTTP/1.1" 200 256 "-" "PostmanRuntime/7.28.4"
+192.168.1.102 - - [22/Mar/2025:10:18:45 +0000] "GET /nonexistent HTTP/1.1" 404 512 "-" "Mozilla/5.0"
+192.168.1.100 - - [22/Mar/2025:10:20:12 +0000] "GET /dashboard HTTP/1.1" 200 4096 "http://example.com/index.html" "Mozilla/5.0"
