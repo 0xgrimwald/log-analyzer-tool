@@ -4,6 +4,7 @@ import sys
 import argparse
 from parser import LogParser
 from nginx_parser import NginxParser
+from exporter import LogExporter
 
 def main():
     parser = argparse.ArgumentParser(description='Log Analyzer Tool')
@@ -12,6 +13,10 @@ def main():
                        default='generic', help='Log file type')
     parser.add_argument('-s', '--stats', action='store_true',
                        help='Show statistics summary')
+    parser.add_argument('--filter-level', choices=['DEBUG', 'INFO', 'WARN', 'ERROR', 'CRITICAL'],
+                       help='Filter by log level')
+    parser.add_argument('--export', choices=['json', 'csv'],
+                       help='Export results to file')
     
     args = parser.parse_args()
     
@@ -58,6 +63,20 @@ def main():
             print("\nLog Level Statistics:")
             for level, count in sorted(stats.items()):
                 print(f"  {level}: {count}")
+        
+        # Apply filtering if requested
+        if args.filter_level:
+            filtered_entries = [e for e in entries if e['level'] == args.filter_level]
+            print(f"Filtered to {len(filtered_entries)} entries with level {args.filter_level}")
+            entries = filtered_entries
+        
+        # Export if requested
+        if args.export:
+            exporter = LogExporter()
+            if args.export == 'json':
+                exporter.export_to_json(entries)
+            elif args.export == 'csv':
+                exporter.export_to_csv(entries)
         
         # Show recent entries
         print(f"\nLast 5 entries:")

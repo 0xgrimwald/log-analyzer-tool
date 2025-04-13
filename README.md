@@ -25,6 +25,17 @@ Specify log type:
 python main.py /path/to/access.log --type nginx
 ```
 
+Filter by log level:
+```bash
+python main.py /path/to/logfile.log --filter-level ERROR
+```
+
+Export results:
+```bash
+python main.py /path/to/logfile.log --export json
+python main.py /path/to/logfile.log --export csv
+```
+
 ## Supported Log Types
 
 - generic (default) - Basic log parsing
@@ -37,3 +48,6 @@ python main.py /path/to/access.log --type nginx
 - Count log entries by severity level
 - Display recent log entries
 - Basic timestamp extraction
+- Filter logs by severity level
+- Export results to JSON or CSV format
+- Nginx access log analysis with IP and status code statistics
