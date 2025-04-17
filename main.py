@@ -2,6 +2,7 @@
 
 import sys
 import argparse
+from datetime import datetime
 from parser import LogParser
 from nginx_parser import NginxParser
 from exporter import LogExporter
@@ -21,6 +22,8 @@ def main():
     args = parser.parse_args()
     
     print(f"Analyzing {args.logfile} as {args.type} log...")
+    
+    start_time = datetime.now()
     
     if args.type == 'nginx':
         log_parser = NginxParser()
@@ -82,6 +85,11 @@ def main():
         print(f"\nLast 5 entries:")
         for entry in entries[-5:]:
             print(f"  Line {entry['line_number']}: [{entry['level']}] {entry['message'][:80]}...")
+    
+    # Show processing time
+    end_time = datetime.now()
+    processing_time = (end_time - start_time).total_seconds()
+    print(f"\nProcessing completed in {processing_time:.2f} seconds")
     
 if __name__ == '__main__':
     main()

@@ -36,13 +36,21 @@ class LogParser:
             'message': line
         }
         
-        # Try to extract timestamp
-        timestamp_match = re.search(r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}', line)
-        if timestamp_match:
-            try:
-                entry['timestamp'] = datetime.strptime(timestamp_match.group(), '%Y-%m-%d %H:%M:%S')
-            except ValueError:
-                pass
+        # Try to extract timestamp (multiple formats)
+        timestamp_patterns = [
+            (r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}', '%Y-%m-%d %H:%M:%S'),
+            (r'\d{2}/\w{3}/\d{4}:\d{2}:\d{2}:\d{2}', '%d/%b/%Y:%H:%M:%S'),
+            (r'\w{3} \d{2} \d{2}:\d{2}:\d{2}', '%b %d %H:%M:%S')
+        ]
+        
+        for pattern, fmt in timestamp_patterns:
+            timestamp_match = re.search(pattern, line)
+            if timestamp_match:
+                try:
+                    entry['timestamp'] = datetime.strptime(timestamp_match.group(), fmt)
+                    break
+                except ValueError:
+                    continue
         
         # Try to extract log level
         level_match = re.search(r'\b(DEBUG|INFO|WARN|WARNING|ERROR|FATAL|CRITICAL)\b', line, re.IGNORECASE)
