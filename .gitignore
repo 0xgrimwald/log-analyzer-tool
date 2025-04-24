@@ -29,3 +29,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+*.csv
+*.json
+!requirements.txt
+log_analysis_*
